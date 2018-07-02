@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.circles.life.test</groupId>
+	<artifactId>tests</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>tests</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- decides whether selenium grid is used to run tests remotely. If false, 
+			tests are run on machine where project is built -->
+		<grid>false</grid>
+		<!-- If grid is set to true, then specify a valid grid server ip -->
+		<gridserver>127.0.0.1</gridserver>
+		<!-- If grid is set to true, then specify a valid grid port -->
+		<gridport>4444</gridport>
+		<!-- Web browser where tests need to be run (chrome, firefox are options) -->
+		<browser>chrome</browser>
+		<!-- OS platform of machine where tests are run doesn’t matter if grid 
+			is true -->
+		<platform>MAC</platform>
+		<!-- decides if the mobiles are connect to selenium grid -->
+		<mobileOnGrid>false</mobileOnGrid>
+		<!-- Mobile platform -->
+		<mobilePlatform>Android</mobilePlatform>
+		<!-- Platform version - mobile OS version -->
+		<platformVersion>5.0.2</platformVersion>
+		<!-- Name of device -->
+		<deviceName>LGV495c85f4d18</deviceName>
+		<!-- bundle Id of the application -->
+		<packageName></packageName>
+		<!-- application launcher activity name (only for Android) -->
+		<activityName></activityName>
+		<!-- relative path of .apk or .ipa file to be installed -->
+		<appPath>resources/apks/dummy.apk</appPath>
+		<!-- If true, app installation is skipped assuming that app is already 
+			been installed on device -->
+		<skipInstall>true</skipInstall>
+		<!-- TestNG xml file which has test suite containing test class names to 
+			be run -->
+		<suiteXmlFile>resources/testNG/Tasks.xml</suiteXmlFile>
+		<!-- folder where TestNG stores output -->
+		<outputFolder>test-output</outputFolder>
+		<!-- if screenshots must be taken on failure -->
+		<takeScreenshot>true</takeScreenshot>
+	</properties>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<reportsDirectory>${outputFolder}</reportsDirectory>
+					<groups>${groups}</groups>
+					<argLine>-Xmx3072m</argLine>
+					<systemPropertyVariables>
+
+						<testenv>${testenv}</testenv>
+
+						<!-- Grid and browser parameters -->
+						<grid>${grid}</grid>
+						<browser>${browser}</browser>
+						<gridserver>${gridserver}</gridserver>
+						<gridport>${gridport}</gridport>
+						<platform>${platform}</platform>
+
+						<!-- Mobile parameters -->
+						<mobileOnGrid>${mobileOnGrid}</mobileOnGrid>
+						<mobilePlatform>${mobilePlatform}</mobilePlatform>
+						<platformVersion>${platformVersion}</platformVersion>
+						<deviceName>${deviceName}</deviceName>
+						<packageName>${packageName}</packageName>
+						<activityName>${activityName}</activityName>
+						<appPath>${appPath}</appPath>
+						<skipInstall>${skipInstall}</skipInstall>
+						<apkBuildNumber>${apkBuildNumber}</apkBuildNumber>
+						<takeScreenshot>${takeScreenshot}</takeScreenshot>
+					</systemPropertyVariables>
+					<suiteXmlFiles>
+						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.circles.life</groupId>
+			<artifactId>testframework</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.testdroid</groupId>
+			<artifactId>testdroid-api</artifactId>
+			<version>1.4.8</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
